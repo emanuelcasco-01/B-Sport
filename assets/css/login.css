@@ -1,0 +1,490 @@
+ /* ============================================ */
+        /* VARIABLES Y RESET - TEMA B-SPORT              */
+        /* ============================================ */
+        :root {
+            --color-black: #0a0a0a;
+            --color-gray-dark: #1a1a1a;
+            --color-gray-medium: #2d2d2d;
+            --color-white: #ffffff;
+            --color-red: #dc2626;
+            --color-red-dark: #991b1b;
+            --color-red-light: #ef4444;
+            --color-yellow: #eab308;
+            --color-yellow-dark: #a16207;
+            --color-yellow-light: #facc15;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ============================================ */
+        /* FONDO CON IMAGEN - CORREGIDO                  */
+        /* ============================================ */
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            /* FONDO PRINCIPAL - IMAGEN */
+            background: url('../../assets/img/fondologin.jpeg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Overlay oscuro sobre la imagen para mejorar legibilidad */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 10, 0.85) 0%, 
+                rgba(26, 26, 26, 0.75) 50%, 
+                rgba(10, 10, 10, 0.85) 100%);
+            z-index: 0;
+        }
+
+        /* Overlay con patrón deportivo sutil */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(220, 38, 38, 0.03) 50px,
+                    rgba(220, 38, 38, 0.03) 100px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(234, 179, 8, 0.02) 40px,
+                    rgba(234, 179, 8, 0.02) 80px
+                );
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ============================================ */
+        /* CONTENEDOR PRINCIPAL - RESPONSIVE             */
+        /* ============================================ */
+        .login-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================ */
+        /* TARJETA DE LOGIN - DISEÑO B-SPORT             */
+        /* ============================================ */
+        .login-card {
+            background: rgba(26, 26, 26, 0.92);
+            backdrop-filter: blur(12px);
+            border: 2px solid var(--color-red);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(220, 38, 38, 0.3),
+                0 0 30px rgba(234, 179, 8, 0.15);
+            transition: all 0.3s;
+        }
+
+        .login-card:hover {
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.7),
+                0 0 0 2px rgba(220, 38, 38, 0.5),
+                0 0 40px rgba(234, 179, 8, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* ============================================ */
+        /* LOGO Y ENCABEZADO                             */
+        /* ============================================ */
+        .login-logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 3px solid var(--color-red);
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(234, 179, 8, 0.2);
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+            background: rgba(26, 26, 26, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 
+                    0 5px 15px rgba(0, 0, 0, 0.5),
+                    0 0 20px rgba(234, 179, 8, 0.2);
+            }
+            50% {
+                box-shadow: 
+                    0 5px 20px rgba(0, 0, 0, 0.6),
+                    0 0 35px rgba(220, 38, 38, 0.5);
+            }
+        }
+
+        .login-logo:hover {
+            transform: scale(1.05) rotate(3deg);
+            border-color: var(--color-yellow);
+        }
+
+        .login-title {
+            margin-top: 15px;
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, var(--color-white) 0%, var(--color-yellow) 50%, var(--color-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(234, 179, 8, 0.3);
+        }
+
+        .login-subtitle {
+            color: #aaa;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 5px;
+        }
+
+        .login-subtitle i {
+            color: var(--color-red);
+            margin: 0 5px;
+            font-size: 0.6rem;
+        }
+
+        /* ============================================ */
+        /* FORMULARIO                                    */
+        /* ============================================ */
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-form label {
+            color: var(--color-white);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: block;
+        }
+
+        .login-form label i {
+            color: var(--color-yellow);
+            margin-right: 8px;
+        }
+
+        .input-group-custom {
+            position: relative;
+        }
+
+        .input-group-custom .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-red);
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+
+        .login-form .form-control {
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid #3a3a3a;
+            border-radius: 12px;
+            padding: 14px 15px 14px 45px;
+            color: var(--color-white);
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .login-form .form-control:focus {
+            background: rgba(30, 30, 30, 0.95);
+            border-color: var(--color-red);
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2);
+            outline: none;
+            color: var(--color-white);
+        }
+
+        .login-form .form-control:focus + .input-icon,
+        .input-group-custom:focus-within .input-icon {
+            color: var(--color-yellow);
+        }
+
+        .login-form .form-control::placeholder {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Checkbox personalizado */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            accent-color: var(--color-red);
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .checkbox-wrapper label {
+            color: #bbb;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: normal;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .checkbox-wrapper label i {
+            color: var(--color-yellow);
+            margin-right: 3px;
+        }
+
+        .checkbox-wrapper label:hover {
+            color: var(--color-white);
+        }
+
+        .checkbox-wrapper label:hover i {
+            color: var(--color-red);
+        }
+
+        /* Botón de login */
+        .btn-login {
+            background: linear-gradient(135deg, var(--color-red) 0%, var(--color-red-dark) 100%);
+            color: var(--color-white);
+            border: none;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(135deg, var(--color-yellow) 0%, var(--color-yellow-dark) 100%);
+            color: var(--color-black);
+            border-color: var(--color-white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(234, 179, 8, 0.4);
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Link de recuperación */
+        .forgot-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .forgot-link a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 3px;
+        }
+
+        .forgot-link a:hover {
+            color: var(--color-yellow);
+            border-bottom-color: var(--color-red);
+        }
+
+        .forgot-link i {
+            color: var(--color-red);
+            margin-right: 5px;
+        }
+
+        /* ============================================ */
+        /* FOOTER                                        */
+        /* ============================================ */
+        .login-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.75rem;
+        }
+
+        .login-footer i {
+            color: var(--color-red);
+            margin: 0 3px;
+        }
+
+        .login-footer .version {
+            color: var(--color-yellow);
+            font-weight: 600;
+        }
+
+        /* ============================================ */
+        /* RESPONSIVE                                    */
+        /* ============================================ */
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            .login-logo {
+                width: 75px;
+                height: 75px;
+            }
+
+            .login-title {
+                font-size: 1.8rem;
+            }
+
+            .login-subtitle {
+                font-size: 0.7rem;
+                letter-spacing: 3px;
+            }
+
+            .btn-login {
+                padding: 12px 16px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .login-card {
+                padding: 25px 15px;
+            }
+
+            .login-logo {
+                width: 65px;
+                height: 65px;
+            }
+
+            .login-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ============================================ */
+        /* ANIMACIONES PARA NOTIFICACIONES               */
+        /* ============================================ */
+        .alertify-notifier .ajs-message {
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-dark) 100%) !important;
+            color: var(--color-white) !important;
+            border-left: 5px solid var(--color-red) !important;
+            border-radius: 10px !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) !important;
+            font-weight: 500;
+        }
+
+        .alertify-notifier .ajs-message.ajs-success {
+            border-left-color: var(--color-yellow) !important;
+        }
+
+        .alertify-notifier .ajs-message.ajs-error {
+            border-left-color: var(--color-red) !important;
+        }
+
+        .alertify-notifier .ajs-message.ajs-warning {
+            border-left-color: var(--color-yellow) !important;
+        }
+
+        /* Efecto de carga */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--color-yellow);
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }

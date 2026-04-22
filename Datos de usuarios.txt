@@ -1,0 +1,3 @@
+usuario: emanuel           contraseña: Emanuel_2026!   rol: administrador
+usuario: Marex             contraseña: Marex_2026      rol: gerente
+usuario: Juanfro           contraseña: Juanfro_2026    rol: cajero

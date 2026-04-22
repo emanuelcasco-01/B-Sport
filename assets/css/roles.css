@@ -1,0 +1,38 @@
+
+    /* Estilos adicionales para la sección de permisos */
+    .permissions-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #dee2e6;
+    }
+    
+    .permission-switch {
+        background: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        transition: all 0.2s;
+    }
+    
+    .permission-switch:hover {
+        background: rgba(234, 179, 8, 0.05);
+        border-color: var(--color-yellow);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .permission-switch .form-check-input {
+        cursor: pointer;
+    }
+    
+    .permission-switch .form-check-input:checked {
+        background-color: var(--color-red);
+        border-color: var(--color-red);
+    }
+    
+    .permission-switch .form-check-label {
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--color-black);
+    }

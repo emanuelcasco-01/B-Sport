@@ -1,0 +1,567 @@
+ :root {
+            --sidebar-width: 280px;
+            --navbar-height: 65px;
+            /* Paleta de colores: Negro, Blanco, Rojo, Amarillo */
+            --color-black: #0a0a0a;
+            --color-white: #ffffff;
+            --color-red: #dc2626;
+            --color-red-dark: #b91c1c;
+            --color-red-light: #ef4444;
+            --color-yellow: #eab308;
+            --color-yellow-dark: #ca8a04;
+            --color-yellow-light: #facc15;
+            --color-gray-dark: #1f1f1f;
+            --color-gray-medium: #2d2d2d;
+            --color-gray-light: #3d3d3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color-black);
+            overflow-x: hidden;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        #wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ============================================
+           NAVBAR SUPERIOR - ROJO Y NEGRO
+           ============================================ */
+        .navbar {
+            padding: 0 25px !important;
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-dark) 100%) !important;
+            border-bottom: 3px solid var(--color-red) !important;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            height: var(--navbar-height);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem !important;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-white) 0%, var(--color-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand i {
+            color: var(--color-red);
+            -webkit-text-fill-color: initial;
+            margin-right: 8px;
+        }
+
+        #menu-toggle {
+            transition: all 0.3s ease;
+            border: 2px solid var(--color-red) !important;
+            color: var(--color-white) !important;
+            background: transparent !important;
+        }
+
+        #menu-toggle:hover {
+            background: var(--color-red) !important;
+            border-color: var(--color-yellow) !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.5);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--color-white) !important;
+            padding: 8px 18px !important;
+            transition: all 0.3s;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background: linear-gradient(135deg, var(--color-red) 0%, var(--color-red-dark) 100%);
+            color: var(--color-yellow) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4);
+        }
+
+        .navbar-nav .nav-link i {
+            color: var(--color-yellow);
+            margin-right: 5px;
+        }
+
+        /* Dropdown del usuario */
+        .dropdown-menu-dark {
+            background: var(--color-gray-dark) !important;
+            border: 1px solid var(--color-red) !important;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-item {
+            color: var(--color-white) !important;
+            transition: all 0.2s;
+            padding: 10px 20px;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(90deg, var(--color-red) 0%, transparent 100%) !important;
+            color: var(--color-yellow) !important;
+            padding-left: 25px;
+        }
+
+        .dropdown-item i {
+            color: var(--color-yellow);
+            margin-right: 10px;
+        }
+
+        .dropdown-divider {
+            border-top: 1px solid var(--color-red);
+            opacity: 0.5;
+        }
+
+        /* ============================================
+        SIDEBAR - NEGRO CON ACENTOS ROJOS Y AMARILLOS
+           ============================================ */
+        #sidebar-wrapper {
+            min-width: var(--sidebar-width);
+            max-width: var(--sidebar-width);
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--color-black) 0%, var(--color-gray-dark) 100%);
+            color: var(--color-white);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 100vh;
+            z-index: 1020;
+            position: fixed;
+            left: 0;
+            top: var(--navbar-height);
+            bottom: 0;
+            overflow-y: auto;
+            border-right: 2px solid var(--color-red);
+            box-shadow: 4px 0 15px rgba(220, 38, 38, 0.2);
+        }
+
+        /* Efecto para ocultar el sidebar */
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        #wrapper.toggled #page-content-wrapper {
+            margin-left: 0;
+        }
+
+        /* ============================================
+        CONTENIDO PRINCIPAL - BLANCO CON ACENTOS
+        ============================================ */
+        #page-content-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            margin-top: var(--navbar-height);
+            min-width: 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f5f5 0%, var(--color-white) 100%);
+            min-height: calc(100vh - var(--navbar-height));
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ============================================
+        RESPONSIVE
+        ============================================ */
+        @media (max-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: calc(-1 * var(--sidebar-width));
+                top: var(--navbar-height);
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                margin-left: 0;
+            }
+            
+            .navbar {
+                padding: 0 15px !important;
+            }
+            
+            .navbar-brand {
+                font-size: 1.2rem !important;
+            }
+        }
+
+        /* ============================================
+        ESTILOS DEL MENÚ LATERAL - ROJO Y AMARILLO
+        ============================================ */
+        .sidebar-heading {
+            padding: 20px 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-white);
+            background: linear-gradient(135deg, var(--color-red-dark) 0%, var(--color-red) 100%);
+            border-bottom: 2px solid var(--color-yellow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-heading i {
+            color: var(--color-yellow);
+            margin-right: 10px;
+        }
+
+        .list-group {
+            border-radius: 0;
+        }
+
+        .list-group-item {
+            background: transparent;
+            color: #cccccc;
+            border: none;
+            padding: 14px 20px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            font-weight: 500;
+        }
+
+        .list-group-item:hover {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.2) 0%, transparent 100%);
+            color: var(--color-white) !important;
+            border-left-color: var(--color-red);
+            padding-left: 28px;
+        }
+
+        .list-group-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            color: var(--color-yellow);
+            transition: all 0.3s;
+        }
+
+        .list-group-item:hover i {
+            color: var(--color-red-light);
+            transform: scale(1.1);
+        }
+
+        .collapse a {
+            background: rgba(0, 0, 0, 0.3) !important;
+            font-size: 0.88rem;
+            padding-left: 56px !important;
+            color: #aaaaaa !important;
+        }
+
+        .collapse a:hover {
+            background: rgba(220, 38, 38, 0.15) !important;
+            color: var(--color-yellow) !important;
+            padding-left: 60px !important;
+        }
+
+        /* ============================================
+        ESTILOS PARA TARJETAS Y CONTENIDO
+        ============================================ */
+        .card {
+            transition: all 0.3s;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: var(--color-white);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(220, 38, 38, 0.2);
+            border-color: var(--color-red);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-dark) 100%);
+            color: var(--color-white);
+            border-bottom: 2px solid var(--color-red);
+            border-radius: 12px 12px 0 0 !important;
+            font-weight: 600;
+        }
+
+        .card-header i {
+            color: var(--color-yellow);
+            margin-right: 8px;
+        }
+
+        /* Botones */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-red) 0%, var(--color-red-dark) 100%);
+            border: none;
+            color: var(--color-white);
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--color-yellow) 0%, var(--color-yellow-dark) 100%);
+            color: var(--color-black);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(234, 179, 8, 0.4);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--color-red);
+            color: var(--color-red);
+            font-weight: 600;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--color-red);
+            border-color: var(--color-yellow);
+            color: var(--color-white);
+        }
+
+        /* Encabezados */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--color-black);
+            font-weight: 700;
+        }
+
+        h1 {
+            border-left: 5px solid var(--color-red);
+            padding-left: 20px;
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1) 0%, transparent 100%);
+        }
+
+        h1 i, h2 i {
+            color: var(--color-red);
+            margin-right: 10px;
+        }
+
+        /* Tablas */
+        .table {
+            background: var(--color-white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-dark) 100%);
+            color: var(--color-white);
+        }
+
+        .table thead th {
+            border-bottom: 2px solid var(--color-red) !important;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(234, 179, 8, 0.1);
+        }
+
+        .table tbody td {
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: var(--color-black);
+            color: var(--color-yellow);
+        }
+
+        .badge-danger {
+            background: var(--color-red);
+            color: var(--color-white);
+        }
+
+        .badge-warning {
+            background: var(--color-yellow);
+            color: var(--color-black);
+        }
+
+        /* Formularios */
+        .form-control, .form-select {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px 15px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--color-red);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--color-black);
+        }
+
+        .form-label i {
+            color: var(--color-red);
+            margin-right: 5px;
+        }
+
+        /* Alertas */
+        .alert {
+            border-radius: 10px;
+            border-left: 5px solid;
+            padding: 15px 20px;
+        }
+
+        .alert-success {
+            background: var(--color-white);
+            border-left-color: var(--color-black);
+            color: var(--color-black);
+        }
+
+        .alert-danger {
+            background: rgba(220, 38, 38, 0.1);
+            border-left-color: var(--color-red);
+            color: var(--color-red-dark);
+        }
+
+        .alert-warning {
+            background: rgba(234, 179, 8, 0.1);
+            border-left-color: var(--color-yellow);
+            color: var(--color-yellow-dark);
+        }
+
+        /* Scroll personalizado */
+        #sidebar-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #sidebar-wrapper::-webkit-scrollbar-track {
+            background: var(--color-black);
+        }
+
+        #sidebar-wrapper::-webkit-scrollbar-thumb {
+            background: var(--color-red);
+            border-radius: 3px;
+        }
+
+        #sidebar-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--color-yellow);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: transparent;
+            padding: 10px 0;
+        }
+
+        .breadcrumb-item a {
+            color: var(--color-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--color-yellow-dark);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--color-black);
+            font-weight: 600;
+        }
+
+        /* Progreso */
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+            background: #e0e0e0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--color-red) 0%, var(--color-yellow) 100%);
+            border-radius: 10px;
+        }
+
+        /* Utilidades */
+        .text-red {
+            color: var(--color-red) !important;
+        }
+
+        .text-yellow {
+            color: var(--color-yellow) !important;
+        }
+
+        .bg-red {
+            background: var(--color-red) !important;
+        }
+
+        .bg-yellow {
+            background: var(--color-yellow) !important;
+        }
+
+        .border-red {
+            border-color: var(--color-red) !important;
+        }
+
+        .border-yellow {
+            border-color: var(--color-yellow) !important;
+        }
+
+        /* Animaciones */
+        @keyframes pulse-red {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+            }
+        }
+
+        @keyframes pulse-yellow {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(234, 179, 8, 0);
+            }
+        }
+
+        .pulse-red {
+            animation: pulse-red 2s infinite;
+        }
+
+        .pulse-yellow {
+            animation: pulse-yellow 2s infinite;
+        }
+
+        /* Footer styles (para integración) */
+        .footer {
+            margin-left: var(--sidebar-width);
+            transition: all 0.3s;
+            width: calc(100% - var(--sidebar-width));
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-dark) 100%);
+            border-top: 3px solid var(--color-red);
+        }
+
+        #wrapper.toggled ~ .footer {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+        }

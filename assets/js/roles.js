@@ -30,20 +30,19 @@ $(document).ready(function() {
                 extend: 'pdfHtml5',
                 text: '<i class="bi bi-file-earmark-pdf"></i> PDF',
                 className: 'btn btn-sm',
-                title: "Listado de Roless",
+                title: "Listado de Roles",
                 exportOptions: { columns: [0, 1, 2] },
                 customize: function (doc) {
                     doc.content.splice(0, 0, {
                         margin: [0, 0, 0, 12],
                         alignment: 'center',
-                        image: 'data:image/jpeg;base64,' + logobase64, // Asegúrate de anteponer el prefijo data:image
+                        image: 'data:image/jpeg;base64,' + logobase64,
                         width: 80
                     });
 
-                    // Estilos generales
                     doc.styles.tableHeader.fontSize = 10;
                     doc.defaultStyle.fontSize = 9;
-                    // --- Configuración del Membrete (Header) ---
+                    
                     doc['header'] = (function(page, pages) {
                         return {
                             columns: [
@@ -62,7 +61,7 @@ $(document).ready(function() {
                             ]
                         };
                     });
-                    // --- Configuración del Pie de Página (Footer) ---
+                    
                     doc['footer'] = (function(page, pages) {
                         return {
                             columns: [
@@ -82,7 +81,6 @@ $(document).ready(function() {
                         };
                     });
 
-                    // Ajuste de márgenes del contenido para no solapar con header/footer
                     doc.content[2].margin = [0, 35, 0, 35]; 
                 }
             },
@@ -118,7 +116,6 @@ $(document).ready(function() {
                 ? "../../modules/roles/roles_guardar.php" 
                 : "../../modules/roles/roles_actualizar.php";
 
-        // Mostrar loading
         const submitBtn = $(this).find('button[type="submit"]');
         const originalText = submitBtn.html();
         submitBtn.html('<span class="loading-spinner" style="width:16px;height:16px;"></span> Guardando...').prop('disabled', true);
@@ -157,13 +154,10 @@ $(document).ready(function() {
         $("#estado_rol").val(d.estado);
         $("#modalTituloRol").html('<i class="bi bi-pencil-square me-2" style="color: var(--color-yellow);"></i>Actualizar Rol: ' + d.nombre);
 
-        // Desmarcar todos los permisos primero
         $(".check-permiso").prop('checked', false);
 
-        // Mostrar loading en el modal
         $("#modalRol").modal("show");
         
-        // Cargar permisos del rol
         $.ajax({
             url: "../../modules/roles/obtener_permisos_rol.php",
             type: "POST",
@@ -182,28 +176,18 @@ $(document).ready(function() {
         });
     });
 
-    // 4. EVENTO ELIMINAR (Desactivación lógica con confirmación)
+    // 4. EVENTO ELIMINAR - NUEVO SISTEMA CON MODAL
     $('#tblRoles').on('click', '.btnEliminarRol', function() {
-        const id = $(this).data('id');
-        const nombre = $(this).data('nombre');
-
-        if (typeof alertify === 'undefined') {
-            if (confirm(`¿Estás seguro de que deseas desactivar el rol: ${nombre}?`)) {
-                ejecutarDesactivacion(id);
-            }
-            return;
-        }
-
-        alertify.confirm(
-            "Confirmar Desactivación",
-            `¿Estás seguro de que deseas <strong>desactivar</strong> el rol:<br><br><strong style="color: var(--color-red);">${nombre}</strong>?<br><br><small>Los usuarios con este rol no podrán acceder al sistema.</small>`,
-            function() {
-                ejecutarDesactivacion(id);
-            },
-            function() {
-                showNotification('Operación cancelada', 'warning');
-            }
-        ).set('labels', { ok: 'Sí, desactivar', cancel: 'Cancelar' });
+        const btn = this;
+        const datos = $(btn).data();
+        
+        // Cargar datos en el modal de confirmación
+        $("#rolEliminarId").val(datos.id);
+        $("#eliminarNombreRol").text(datos.nombre);
+        $("#eliminarDescripcionRol").text(datos.desc || 'Sin descripción');
+        
+        // Mostrar el modal
+        $("#modalEliminarRol").modal("show");
     });
     
     // Limpiar modal al cerrar
@@ -212,13 +196,57 @@ $(document).ready(function() {
         $("#id_rol").val("");
         $(".check-permiso").prop('checked', false);
     });
+    
+    // Limpiar modal de eliminación al cerrar
+    $('#modalEliminarRol').on('hidden.bs.modal', function() {
+        $("#rolEliminarId").val("");
+    });
 
 }); 
 
 // ============================================
 // FUNCIONES GLOBALES
 // ============================================
-function ejecutarDesactivacion(id) {
+
+function confirmarEliminarRol() {
+    const id = $("#rolEliminarId").val();
+    
+    if (!id) {
+        showNotification('Error: ID de rol no encontrado', 'error');
+        return;
+    }
+    
+    // Cerrar el modal
+    $("#modalEliminarRol").modal("hide");
+    
+    // Mostrar confirmación final
+    if (typeof alertify !== 'undefined') {
+        alertify.confirm(
+            "Confirmar Eliminación Definitiva",
+            `<div style="text-align: center;">
+                <i class="bi bi-exclamation-triangle-fill" style="font-size: 2rem; color: var(--color-red);"></i>
+                <p class="mt-2"><strong>¿Está completamente seguro?</strong></p>
+                <p class="text-muted">Esta acción eliminará permanentemente el rol y no podrá ser recuperado.</p>
+                <p class="text-danger"><small>Los usuarios asociados a este rol podrían verse afectados.</small></p>
+            </div>`,
+            function() {
+                ejecutarEliminacionRol(id);
+            },
+            function() {
+                showNotification('Eliminación cancelada', 'warning');
+            }
+        ).set('labels', { ok: 'Sí, eliminar definitivamente', cancel: 'Cancelar' });
+    } else {
+        if (confirm('¿Está completamente seguro de eliminar este rol? Esta acción no se puede deshacer.')) {
+            ejecutarEliminacionRol(id);
+        }
+    }
+}
+
+function ejecutarEliminacionRol(id) {
+    // Mostrar loading
+    showNotification('Eliminando rol...', 'info');
+    
     $.ajax({
         url: "../../modules/roles/roles_eliminar.php",
         type: "POST",
@@ -227,7 +255,7 @@ function ejecutarDesactivacion(id) {
         success: function(res) {
             if (res.status) {
                 showNotification(res.msg, 'success');
-                setTimeout(() => { location.reload(); }, 1000);
+                setTimeout(() => { location.reload(); }, 1200);
             } else {
                 showNotification(res.msg, 'error');
             }
@@ -245,15 +273,4 @@ function prepararNuevoRol() {
     $("#estado_rol").val("1");
     $(".check-permiso").prop('checked', false);
     $("#modalTituloRol").html('<i class="bi bi-shield-plus me-2" style="color: var(--color-yellow);"></i>Registrar Nuevo Rol');
-}
-
-// Mostrar notificación (usando la función global del footer)
-function showNotification(message, type) {
-    if (typeof window.showNotification === 'function') {
-        window.showNotification(message, type);
-    } else if (typeof alertify !== 'undefined') {
-        alertify[type](message);
-    } else {
-        alert(message);
-    }
 }

@@ -89,11 +89,7 @@ include_once "../layout/header.php";
                                             title="Editar Proveedor">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger" 
-                                            onclick="eliminarProveedor(<?= $proveedor['id_proveedor'] ?>, '<?= htmlspecialchars($proveedor['razon_social']) ?>')"
-                                            title="Eliminar Proveedor">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                    c
                                 </div>
                             </td>
                         </tr>
@@ -170,6 +166,75 @@ include_once "../layout/header.php";
                 </button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Modal para confirmar eliminación de proveedor -->
+<div class="modal fade" id="modalEliminarProveedor" tabindex="-1" aria-labelledby="modalEliminarProveedorLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalEliminarProveedorLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Eliminación
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="proveedorEliminarId">
+                
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <strong>Advertencia:</strong> Está a punto de eliminar permanentemente este proveedor. Revise los datos antes de continuar.
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0"><i class="bi bi-building me-2"></i>Datos del Proveedor</h6>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless table-sm mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold" style="width: 35%;">RUC:</td>
+                                    <td><span id="eliminarRuc" class="text-primary"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Razón Social:</td>
+                                    <td><span id="eliminarRazonSocial" class="fw-bold"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Dirección:</td>
+                                    <td><span id="eliminarDireccion"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Teléfono:</td>
+                                    <td><span id="eliminarTelefono"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Email:</td>
+                                    <td><span id="eliminarEmail"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <p class="text-danger mb-0">
+                        <i class="bi bi-shield-exclamation me-1"></i>
+                        <small>Esta acción no se puede deshacer</small>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Cancelar
+                </button>
+                <button type="button" class="btn btn-danger" onclick="confirmarEliminarProveedor()">
+                    <i class="bi bi-trash-fill me-1"></i>Eliminar Definitivamente
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 

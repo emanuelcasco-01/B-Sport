@@ -22,13 +22,13 @@ if (empty($id_categoria)) {
 }
 
 try {
-    $sql = "UPDATE categoria SET estado = 0 WHERE id_categoria = ?";
+    $sql = "DELETE FROM categoria WHERE id_categoria = ?";
     
     $stmt = $conexion->prepare($sql);
     
     if ($stmt->execute([$id_categoria])) {
         $response['status'] = true;
-        $response['msg'] = 'Categoría desactivada correctamente';
+        $response['msg'] = 'Categoría eliminada correctamente';
     } else {
         $response['msg'] = 'No se pudo completar la operación en la base de datos';
     }

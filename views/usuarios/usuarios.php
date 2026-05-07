@@ -95,11 +95,16 @@ include_once "../layout/header.php";
                                             title="Editar">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger" 
-                                            onclick="eliminarUsuario(<?= $user['id_usuario'] ?>, '<?= htmlspecialchars($user['username']) ?>')"
-                                            title="Eliminar">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                    <button class="btn btn-sm btn-danger        btnEliminarUsuario" 
+                                        onclick="eliminarUsuario(this)"
+                                        data-id_usuario="<?php echo $user['id_usuario']; ?>"
+                                        data-nombre="<?php echo htmlspecialchars($user['nombre']); ?>"
+                                        data-apellido="<?php echo htmlspecialchars($user['apellido']); ?>"
+                                        data-username="<?php echo htmlspecialchars($user['username']); ?>"
+                                        data-email="<?php echo htmlspecialchars($user['email'] ?? ''); ?>"
+                                        data-id_rol="<?php echo $user['id_rol']; ?>">
+                                    <i class="bi bi-trash"></i>
+                                    </button>   
                                 </div>
                             </td>
                         </tr>
@@ -197,6 +202,78 @@ include_once "../layout/header.php";
         </form>
     </div>
 </div>
+
+<!-- Modal para confirmar eliminación de usuario -->
+<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" aria-labelledby="modalEliminarUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalEliminarUsuarioLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Eliminación de Usuario
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="usuarioEliminarId">
+                
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <strong>Advertencia:</strong> Está a punto de eliminar permanentemente este usuario. Revise los datos antes de continuar.
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0"><i class="bi bi-person-badge me-2"></i>Datos del Usuario</h6>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless table-sm mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold" style="width: 35%;">Nombre:</td>
+                                    <td><span id="eliminarNombre" class="text-primary"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Apellido:</td>
+                                    <td><span id="eliminarApellido" class="text-primary"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Username:</td>
+                                    <td><span id="eliminarUsername" class="fw-bold"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Email:</td>
+                                    <td><span id="eliminarEmail"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Rol:</td>
+                                    <td>
+                                        <span class="badge bg-info" id="eliminarRol"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <p class="text-danger mb-0">
+                        <i class="bi bi-shield-exclamation me-1"></i>
+                        <small>Esta acción no se puede deshacer</small>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Cancelar
+                </button>
+                <button type="button" class="btn btn-danger" onclick="confirmarEliminarUsuario()">
+                    <i class="bi bi-trash-fill me-1"></i>Eliminar Definitivamente
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?php include_once "../layout/footer.php"; ?>
 

@@ -28,13 +28,13 @@ if ($id_usuario == $_SESSION['id_usuario']) {
 }
 
 try {
-    $sql = "UPDATE usuario SET estado = 0 WHERE id_usuario = ?";
+    $sql = "DELETE FROM usuario WHERE id_usuario = ?";
     
     $stmt = $conexion->prepare($sql);
     
     if ($stmt->execute([$id_usuario])) {
         $response['status'] = true;
-        $response['msg'] = 'Usuario desactivado correctamente';
+        $response['msg'] = 'Usuario eliminado correctamente';
     } else {
         $response['msg'] = 'No se pudo completar la operación en la base de datos';
     }

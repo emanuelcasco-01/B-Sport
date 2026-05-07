@@ -27,14 +27,14 @@ if (isset($_POST['id_rol']) && !empty($_POST['id_rol'])) {
             ]);
             exit;
         }
-        $sql = "UPDATE rol SET estado = 0 WHERE id_rol = ?";
+        $sql = "DELETE FROM rol WHERE id_rol = ?";
         $stmt = $conexion->prepare($sql);
         $stmt->execute([$id_rol]);
 
         if ($stmt->rowCount() > 0) {
             echo json_encode([
                 "status" => true,
-                "msg" => "El rol ha sido desactivado correctamente."
+                "msg" => "El rol ha sido eliminado correctamente."
             ]);
         } else {
             echo json_encode([

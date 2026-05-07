@@ -82,10 +82,10 @@ include_once "../layout/header.php";
                                             title="Editar Rol">
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger btnEliminarRol" 
-                                            data-id="<?= $rol['id_rol'] ?>" 
-                                            data-nombre="<?= htmlspecialchars($rol['nombre']) ?>"
-                                            title="Desactivar Rol">
+                                    <button class="btn btn-sm btn-danger btnEliminarRol" 
+                                            data-id="<?php echo $rol['id_rol']; ?>"
+                                            data-nombre="<?php echo htmlspecialchars($rol['nombre']); ?>"
+                                            data-desc="<?php echo htmlspecialchars($rol['descripcion'] ?? ''); ?>">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -136,7 +136,7 @@ include_once "../layout/header.php";
                             <i class="bi bi-file-text text-red"></i> Descripción
                         </label>
                         <textarea name="descripcion" id="descripcion_rol" class="form-control" rows="2" 
-                                placeholder="Describe las funciones y responsabilidades de este rol..."></textarea>
+                                placeholder="Describe lasA funciones y responsabilidades de este rol..."></textarea>
                     </div>
                 </div>
 
@@ -175,7 +175,62 @@ include_once "../layout/header.php";
         </form>
     </div>
 </div>
-
+<!-- Modal para confirmar eliminación de rol -->
+<div class="modal fade" id="modalEliminarRol" tabindex="-1" aria-labelledby="modalEliminarRolLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalEliminarRolLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Eliminación de Rol
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="rolEliminarId">
+                
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <strong>Advertencia:</strong> Está a punto de eliminar permanentemente este rol. Revise los datos antes de continuar.
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0"><i class="bi bi-shield-lock me-2"></i>Datos del Rol</h6>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless table-sm mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold" style="width: 35%;">Nombre del Rol:</td>
+                                    <td><span id="eliminarNombreRol" class="fw-bold text-primary"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Descripción:</td>
+                                    <td><span id="eliminarDescripcionRol" class="text-muted"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <p class="text-danger mb-0">
+                        <i class="bi bi-shield-exclamation me-1"></i>
+                        <small>Esta acción no se puede deshacer. Los usuarios con este rol podrían verse afectados.</small>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Cancelar
+                </button>
+                <button type="button" class="btn btn-danger" onclick="confirmarEliminarRol()">
+                    <i class="bi bi-trash-fill me-1"></i>Eliminar Definitivamente
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php include_once "../layout/footer.php"; ?>
 
 <!-- Script específico para roles -->

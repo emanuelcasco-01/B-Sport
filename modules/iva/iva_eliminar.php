@@ -22,13 +22,12 @@ if (empty($id_iva)) {
 }
 
 try {
-    $sql = "UPDATE iva SET estado = 0 WHERE id_iva = ?";
-    
+    $sql = "DELETE FROM iva WHERE id_iva = ?";
     $stmt = $conexion->prepare($sql);
     
     if ($stmt->execute([$id_iva])) {
         $response['status'] = true;
-        $response['msg'] = 'Iva desactivado correctamente';
+        $response['msg'] = 'Iva eliminado correctamente';
     } else {
         $response['msg'] = 'No se pudo completar la operación en la base de datos';
     }

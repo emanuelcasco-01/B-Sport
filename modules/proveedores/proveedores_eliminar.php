@@ -22,19 +22,30 @@ if (empty($id_proveedor)) {
 }
 
 try {
-    $sql = "UPDATE proveedor SET estado = 0 WHERE id_proveedor = ?";
+  
+    $sql = "DELETE FROM proveedor WHERE id_proveedor = ?";
     
     $stmt = $conexion->prepare($sql);
     
     if ($stmt->execute([$id_proveedor])) {
-        $response['status'] = true;
-        $response['msg'] = 'Proveedor desactivado correctamente';
+        // Verificamos si realmente se eliminó algún registro
+        if ($stmt->rowCount() > 0) {
+            $response['status'] = true;
+            $response['msg'] = 'Proveedor eliminado correctamente';
+        } else {
+            $response['msg'] = 'No se encontró el proveedor especificado';
+        }
     } else {
-        $response['msg'] = 'No se pudo completar la operación en la base de datos';
+        $response['msg'] = 'No se pudo completar la eliminación en la base de datos';
     }
 
 } catch (PDOException $e) {
-    $response['msg'] = 'Error de integridad: Este proveedor tiene registros asociados y no puede ser eliminado.';
+    // Error de integridad referencial (claves foráneas)
+    if ($e->getCode() == '23000') {
+        $response['msg'] = 'Error de integridad: Este proveedor tiene registros asociados y no puede ser eliminado. Elimine primero los registros relacionados.';
+    } else {
+        $response['msg'] = 'Error en la base de datos: ' . $e->getMessage();
+    }
 }
 
 echo json_encode($response);

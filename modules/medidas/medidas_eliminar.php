@@ -22,13 +22,13 @@ if (empty($id_unidad)) {
 }
 
 try {
-    $sql = "UPDATE unidad_medida SET estado = 0 WHERE id_unidad = ?";
+    $sql = "DELETE FROM unidad_medida WHERE id_unidad = ?";
     
     $stmt = $conexion->prepare($sql);
     
     if ($stmt->execute([$id_unidad])) {
         $response['status'] = true;
-        $response['msg'] = 'Medida desactivada correctamente';
+        $response['msg'] = 'Medida eliminada correctamente';
     } else {
         $response['msg'] = 'No se pudo completar la operación en la base de datos';
     }
